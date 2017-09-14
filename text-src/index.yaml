@@ -1,5 +1,5 @@
 config:
-  fqdn: 'http://shunyahagiwara.com'
+  fqdn: ''
 body:
   - text: 1984年
     children:

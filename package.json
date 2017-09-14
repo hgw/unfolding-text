@@ -35,6 +35,9 @@
     "run-sequence": "^1.2.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-wait": "0.0.2",
     "webpack": "^1.13.1"
   },
   "dependencies": {
