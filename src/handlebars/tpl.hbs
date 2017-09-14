@@ -53,14 +53,12 @@
                                                          alt="{{alt}}"></div>
     {{/if}}
   {{/if}}
-
 {{/inline}}
 
 
 {{! ループテンプレート }}
 {{#*inline "textLoop"}}
   {{#each array}}
-
 
   {{! コンテンツより before で再帰呼び出し }}
     {{#if before}}
@@ -69,13 +67,11 @@
       </div>
     {{/if}}
 
-
     {{#isExistBothValues before children}}
       <a href="#child-tlp-{{id}}" class="tpl-link">{{> echo that=this}}</a>
     {{else}}
       {{> echo that=this}}
     {{/isExistBothValues}}
-
 
     {{! コンテンツより after で再帰呼び出し }}
     {{#if children}}
@@ -84,12 +80,11 @@
       </div>
     {{/if}}
 
-
   {{/each}}
 {{/inline}}
+
 {{! 実行開始 }}
 {{> textLoop array=this.body }}
-
 
 <script src="{{@root.config.fqdn}}/assets/js/app.js"></script>
 <script src="{{@root.config.fqdn}}/assets/js/templates.js"></script>

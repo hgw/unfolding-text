@@ -113,7 +113,7 @@ gulp.task('js', () => {
  *
  */
 gulp.task('yaml-to-json', function () {
-  gulp.src(path.src + '/yaml/*.yml')
+  gulp.src(path.textSrc)
     .pipe(yaml({
       schema: 'DEFAULT_SAFE_SCHEMA'
     }))
@@ -121,8 +121,7 @@ gulp.task('yaml-to-json', function () {
 });
 
 gulp.task('wait-a-second', function () {
-  console.log("wait 1500ms");
-  return gulp.src(path.src + '/yaml/*.yml')
+  return gulp.src(path.textSrc)
     .pipe(wait(500));
 });
 
@@ -130,8 +129,9 @@ gulp.task('wait-a-second', function () {
 /**
  * handlebars をコンパイルする
  */
-gulp.task('handlebars-compile--ja', () => {
-  return handlebarsCompile(path.textSrc, 'index.html', path.cache + '/html')
+gulp.task('handlebars-compile', () => {
+  console.log(path.dist+ 'に書き出します');
+  return handlebarsCompile(path.src+'/data/index.json', 'index.html', path.cache +'/html');
 });
 
 
@@ -143,10 +143,10 @@ let handlebarsCompile = function (src, filename, destPath) {
   setHbsIDs(hbsModel.body, "");
 
   // ***************************
-  hbsModel.config.fqdn = "/";
+  // hbsModel.config.fqdn = "/";
 
   let options = {
-    batch: [path.src + '/hbs/partials'],
+  //   batch: [path.src + '/hbs/partials'],
     helpers: {
       isExistBothValues: function (v1, v2, options) {
         if (v1 || v2) {
@@ -158,8 +158,9 @@ let handlebarsCompile = function (src, filename, destPath) {
     }
   };
 
-  return gulp.src(path.src + '/hbs/tpl.hbs')
+  return gulp.src(path.src + '/handlebars/tpl.hbs')
     .pipe(handlebars(hbsModel, options))
+    // .pipe(handlebars(hbsModel))
     .pipe(rename(filename))
     .pipe(gulp.dest(destPath));
 };
@@ -171,7 +172,7 @@ let handlebarsCompile = function (src, filename, destPath) {
 gulp.task('minify', function () {
   return gulp.src(path.cache + '/html/**/*.html')
     .pipe(htmlmin({collapseWhitespace: true}))
-    .pipe(gulp.dest(path.root));
+    .pipe(gulp.dest(path.dist));
 });
 
 
@@ -196,8 +197,7 @@ gulp.task('watch', function (callback) {
         'clean',
         'yaml-to-json',
         'wait-a-second',
-        'handlebars-compile--ja',
-        'handlebars-compile--en',
+        'handlebars-compile',
         'minify',
         'js',
         "notify-complete_yaml"
@@ -256,7 +256,7 @@ gulp.task('default', function () {
     'clean',
     'yaml-to-json',
     'wait-a-second',
-    'handlebars-compile--ja',
+    'handlebars-compile',
     'minify',
     'js',
     "notify-start_watching",

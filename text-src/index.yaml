@@ -1,5 +1,6 @@
 config:
   fqdn: ''
+  test: 12345
 body:
   - text: 1984年
     children:
