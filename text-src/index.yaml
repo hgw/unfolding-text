@@ -1,0 +1,17 @@
+config:
+  fqdn: 'http://shunyahagiwara.com'
+body:
+  - text: 1984年
+    children:
+      - text: 7月 16日
+#        slide:
+#          - img: "/local-products/assets/img/products.jpg"
+  - text: 神奈川県
+    children:
+      - text: 川崎市
+        children:
+          - text: 川崎区
+            class: added-class
+  - text: 生まれ
+    before:
+      - text: 手前に挿入されるテキスト
