@@ -29,7 +29,7 @@ https://store.tsite.jp/local-products/
 
 ## 原稿の書き方
 
-原稿は YAML 形式で書かれます。
+原稿は YAML 形式で書かれます。原稿の [サンプル](https://github.com/hgw/unfolding-text/tree/master/src/text-src) 。
 
 ### 1. 親子関係
 
