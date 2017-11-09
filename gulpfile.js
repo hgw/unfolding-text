@@ -61,7 +61,8 @@ let setHbsIDs = function (target_, level_) {
 gulp.task('clean', del.bind(null, [
   path.cache + '/**/*.html',
   path.cache + '/**/*.js',
-  path.cache + '/**/*.css'
+  path.cache + '/**/*.css',
+  path.cache + '/**/*.json',
 ]));
 
 
@@ -148,7 +149,7 @@ gulp.task('yaml-to-json', function () {
     .pipe(yaml({
       schema: 'DEFAULT_SAFE_SCHEMA'
     }))
-    .pipe(gulp.dest(path.src + '/data/'))
+    .pipe(gulp.dest(path.cache + '/data/'))
 });
 
 /**
@@ -156,7 +157,7 @@ gulp.task('yaml-to-json', function () {
  */
 gulp.task('compile-handlebars', () => {
 
-  let src = path.src + '/data/index.json';
+  let src = path.cache + '/data/index.json';
   let fileName = 'index.html';
   let distPath = path.cache + '/html';
 
