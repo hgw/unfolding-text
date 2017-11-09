@@ -13,6 +13,7 @@ body:
         children:
           - text: 川崎区
             class: added-class
-  - text: 生まれ
+  - text: 生まれだよ
     before:
       - text: 手前に挿入されるテキスト
+  - text: はぎわらテスト

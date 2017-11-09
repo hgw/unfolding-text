@@ -1,6 +1,6 @@
 {
   "name": "unfolding-text",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "private": false,
   "description": "unfolding text format project.",
   "repository": {
@@ -38,10 +38,10 @@
     "run-sequence": "^1.2.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "webpack": "^1.13.1"
-  },
-  "dependencies": {
+    "webpack": "^1.13.1",
     "gulp-compass": "^2.1.0",
     "handlebars": "^4.0.5"
+  },
+  "dependencies": {
   }
 }
