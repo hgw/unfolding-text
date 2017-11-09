@@ -1,0 +1,86 @@
+$breakpoint: 640;
+
+$break-point-pc-mini-h: 640;
+$break-point-tablet-s: 700;
+$break-point-laptop: 1060;
+$break-point-laptop-l: 1500;
+$break-point-mobile-l: 425;
+
+
+// 幅判定 ==============================
+@mixin responsive( $mode :'sp', $a : 0, $b : 0 ) {
+
+  @if $mode == 'sp' {
+    @media screen and (max-width: $break-point-tablet-s + px) {
+      @content;
+    }
+  } @else if($mode == 'tablet'){
+    @media screen and (max-width: $break-point-laptop + px) {
+      @content;
+    }
+  }
+
+  @if $mode == 'pc' {
+    @media screen and (min-width: $break-point-tablet-s + 1px) {
+      @content;
+    }
+  } @else if $mode == '~' {
+    @media screen and (min-width: $a + px) and (max-width: $b + px) {
+      @content;
+    }
+  } @else if $mode == '>' {
+    @media screen and (min-width: $a + px) {
+      @content;
+    }
+  } @else if $mode == '<' {
+    @media screen and (max-width: $a + px) {
+      @content;
+    }
+  }
+
+}
+
+// 高さ判定 ==============================
+@mixin responsiveH( $mode :'~', $a : 0, $b : 0 ) {
+
+  @if $mode == '~' {
+    @media screen and (min-height: $a + px) and (max-height: $b + px) {
+      @content;
+    }
+  } @else if $mode == '>' {
+    @media screen and (min-height: $a + px) {
+      @content;
+    }
+  } @else if $mode == '<' {
+    @media screen and (max-height: $a + px) {
+      @content;
+    }
+  }
+
+}
+
+// body for responsive
+// ===================
+
+body {
+  &:before {
+    content: "desktop-l";
+    display: none;
+    @include responsive('<', $break-point-laptop) {
+      content: "desktop";
+    }
+    @include responsive('<', $break-point-tablet-s) {
+      content: "tablet";
+    }
+    @include responsive('<', $break-point-mobile-l) {
+      content: "smartphone";
+    }
+  }
+  &:after {
+    display: none;
+    content: "desktop";
+    @include responsive('<', $break-point-pc-mini-h) {
+      content: "desktop-mini";
+    }
+  }
+}

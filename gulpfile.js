@@ -19,6 +19,9 @@ const handlebars = require('gulp-compile-handlebars');
 const rename = require('gulp-rename');
 const htmlmin = require('gulp-htmlmin');
 const wait = require('gulp-wait');
+const compass = require('gulp-compass');
+const plumber = require('gulp-plumber');
+
 
 const path = {};
 path.root = './';
@@ -93,7 +96,7 @@ gulp.task('compress', function () {
  * JS
  */
 gulp.task('js', () => {
-  return browserify({entries: `${path.src}/js/es6/app.js`})
+  return browserify({entries: `${path.src}/js/app.js`})
     .transform(babelify.configure({presets: ['es2015']}))
     .bundle()
     .on('error', function (err) {
@@ -166,6 +169,22 @@ let handlebarsCompile = function (src, filename, destPath) {
 };
 
 
+
+gulp.task('compass-deploy', function () {
+  return gulp.src(path.src + '/scss/*.scss').pipe(plumber({
+    errorHandler: errorHandler
+  })).pipe(compass({
+    config_file: './config.rb',
+    css: path.dist + '/css/',
+    sass: path.src + '/scss/',
+    environment: "production",
+    comments: false,
+    force: true
+  }));
+});
+
+
+
 /**
  * HTML Minify
  */
@@ -182,7 +201,17 @@ gulp.task('minify', function () {
 gulp.task('watch', function (callback) {
   gulp.watch(
     [
-      `${path.src}/js/es6/**/*.js`
+      path.src + '/scss/**/*.scss'
+    ],
+    function (e) {
+      return runSequence(
+        'compass-dev',
+        "notify-complete_compass"
+      );
+    });
+  gulp.watch(
+    [
+      `${path.src}/js/**/*.js`
     ], [
       'js',
       "notify-complete_js"
@@ -255,6 +284,7 @@ gulp.task('default', function () {
   return runSequence(
     'clean',
     'yaml-to-json',
+    'compass-deploy',
     'wait-a-second',
     'handlebars-compile',
     'minify',

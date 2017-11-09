@@ -1,0 +1,735 @@
+$modal-opacity: 1;
+
+// countdown
+// =========
+.countdown {
+  display: table;
+  height: 80px;
+  margin-top: -40px;
+  position: fixed;
+  right: 12px;
+  top: 50%;
+  width: 80px;
+
+  @include responsive(tablet) {
+    height: 40px;
+    margin-top: -20px;
+    right: 12px;
+    width: 40px;
+  }
+
+  @include responsive(sp) {
+    height: auto;
+    margin: 0;
+    right: 15px;
+    top: 20px;
+    width: auto;
+  }
+
+  .countdown__num-box {
+    display: table-cell;
+    font-family: $font-sans-serif-en;
+    text-align: center;
+    vertical-align: middle;
+    @include fontsize(23);
+    @include responsive(sp) {
+      @include fontsize(16);
+    }
+  }
+
+  .countdown__num {
+    //color: blue;
+    cursor: pointer;
+    font-style: normal;
+    text-decoration: none;
+  }
+
+  .countdown__home {
+    font-family: $font-sans-serif-en;
+    font-size: 16px;
+    left: 50%;
+    line-height: 0;
+    margin-left: -1.5em;
+    position: absolute;
+    text-decoration: none;
+    top: 50%;
+  }
+}
+
+// animations
+// ==========
+.ani-button--dead {
+  border-bottom-color: $white;
+  cursor: pointer;
+  @include customAnimation(remove-border, 1s, ease-in-out, 1) {
+    0% {
+      border-bottom-color: $black;
+    }
+    100% {
+      border-bottom-color: $white;
+    }
+  }
+}
+
+.ani-child--show {
+  @include customAnimation(show-children, 3000ms, $easeInOutQuart, 1) {
+    0% {
+      background-color: $hi-light;
+      opacity: 0;
+    }
+
+    25% {
+      background-color: $hi-light;
+      opacity: 1;
+    }
+
+    100% {
+      background-color: transparent;
+      opacity: 1;
+    }
+  }
+
+  & > span,
+  & > a {
+    @include customAnimation(show-children-2, 1000ms, $easeInOutQuart, 1) {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+// photo
+// =====
+.block-photo {
+  display: block;
+  line-height: 0;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  text-align: left;
+  width: 100%;
+
+  img {
+    height: auto;
+    line-height: 0;
+    max-width: 100%;
+  }
+}
+
+.main-visual {
+  max-width: 512px;
+  padding: 0;
+
+  text-align: left;
+}
+
+.product-carousel {
+  display: inline-block;
+  max-width: 128px;
+  vertical-align: middle;
+
+  img {
+    height: auto;
+    width: 100%;
+  }
+}
+
+.notes {
+  color: $gray;
+  @include fontsize(16);
+}
+
+.modal-slide {
+  background: #fff;
+  border: 1px solid #ccc;
+  display: none;
+  // height: 46.875px; // 4:3
+  height: 41.666666667px; // 6:4
+  left: -1000px;
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  width: 62.5px;
+  z-index: $z-modal;
+
+  li {
+    line-height: 0;
+    padding: 0;
+
+    img {
+      height: auto;
+      width: 100%;
+    }
+  }
+}
+
+// override
+// ========
+.unslider {
+  display: inline;
+}
+
+// menu
+// ====
+.menu-list {
+  @include transition(top 500ms $easeOutQuart);
+
+  background: rgba(0, 0, 0, $modal-opacity);
+  color: #fff;
+  font-family: $font-sans-serif;
+  letter-spacing: 0.05em;
+  line-height: 2em;
+  list-style: none;
+  position: absolute;
+  right: 0;
+  width: 220px;
+
+  a {
+    @include transition(border-color 500ms $easeOutQuart);
+
+    border-bottom: 1px solid #000;
+    color: #fff;
+    padding-bottom: 2px;
+    text-decoration: none;
+
+    &:hover {
+      border-bottom: 1px solid #fff;
+    }
+
+    &:active {
+      border-bottom: 1px solid #000;
+    }
+  }
+
+  // スマホはカバーするようなデザイン
+  @include responsive(sp) {
+    height: 100vh;
+    left: 0;
+    padding: 0;
+    position: fixed;
+    right: auto;
+    top: 0;
+    width: 100%;
+  }
+
+  .ua-mobile & {
+    height: 100vh;
+    left: 0;
+    padding: 0;
+    position: fixed;
+    right: auto;
+    top: 0;
+    width: 100%;
+  }
+
+  // mouse のヒットエリア
+  &::after {
+    background: transparent;
+    bottom: -30px;
+    content: "";
+    display: block;
+    height: 30px;
+    position: absolute;
+    width: 100%;
+  }
+
+  &__wrap {
+    border-bottom: 1px solid #fff;
+    margin: 0;
+    padding: 5px 10px;
+    @include fontsize(12);
+
+    @include responsive(sp) {
+      @include fontsize(14);
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+    &.special-links {
+      border-bottom-color: #666;
+      border-bottom-style: solid;
+      padding-top: 15px;
+      @include responsive(sp) {
+        padding-top: 5px;
+      }
+    }
+  }
+
+  &__wrap_mini {
+    padding-left: 2em;
+  }
+
+  &__node {
+    list-style: none;
+  }
+
+  &__node_mini {
+    list-style: disc;
+  }
+
+  &__has-class {
+    line-height: 2em;
+  }
+
+  &__ar {
+    margin-bottom: 1em;
+  }
+
+  &__ar-label {
+    color: #dadae2;
+  }
+
+  &.active {
+
+  }
+}
+
+// ここからスライドショー用 CSS
+// slide
+// =====
+
+.slide {
+  display: none;
+  @include opacity(0);
+  @include transition(all 0.5s $easeOutQuart);
+
+  &.active {
+    display: block;
+    @include opacity(1);
+  }
+
+  img {
+    width: 100%;
+  }
+
+  // cover button
+  // ============
+  &__cover {
+    border: none;
+    cursor: default;
+    display: none;
+    @include opacity(0);
+    @include transition(all 0.5s $easeOutQuart);
+
+    &.active {
+      cursor: pointer;
+      display: block;
+    }
+
+    &.active:hover {
+      @include opacity(1);
+    }
+
+    &.disable {
+      display: none;
+    }
+
+  }
+
+  &__zoomin {
+    background: #fff;
+    color: #000;
+  }
+
+  &__background {
+    background: rgba(255, 255, 255, $modal-opacity);
+    @include opacity(0);
+    @include transition(all 0.5s $easeOutQuart);
+    &.active {
+      @include opacity(1);
+    }
+  }
+}
+
+.modal-docs {
+  background: rgba(255, 255, 255, $modal-opacity);
+  color: #000;
+  z-index: $z-modal;
+  -webkit-overflow-scrolling: touch;
+
+  &--black {
+    background: rgba(0, 0, 0, $modal-opacity);
+    color: #fff;
+  }
+
+  &__inner {
+    @include fontsize(14);
+
+    background: $hi-light;
+    letter-spacing: 0.1em;
+
+    &--transparent {
+      background: transparent;
+    }
+
+    .heading {
+      @include heading;
+      @include fontsize(18);
+      @include responsive(sp) {
+        margin-bottom: 15px;
+        padding-top: 5px;
+      }
+    }
+
+    .heading-2 {
+      @include heading;
+      @include fontsize(18);
+
+      margin-bottom: 0;
+      margin-top: 0;
+      padding-top: 0;
+
+      a {
+        @include transition(border-color 500ms $easeOutQuart);
+
+        border-bottom: 1px solid #000;
+        padding-bottom: 3px;
+        text-decoration: none;
+
+        &:hover {
+          border-bottom: 1px solid transparent;
+        }
+
+        &:active {
+          border-bottom: 1px solid #000;
+        }
+      }
+
+    }
+
+    .price-box {
+      @include clearfix();
+      margin-bottom: 1em;
+      @include responsive(sp) {
+        padding-top: 5px;
+      }
+      &__left {
+        float: left;
+        line-height: 1.6em;
+        padding-top: 5px;
+      }
+
+      &__right {
+        float: right;
+        line-height: 1.6em;
+        padding-top: 5px;
+      }
+    }
+
+    .price {
+      @include fontsize(18);
+
+      color: #000;
+      font-family: $font-sans-serif-bold;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    .description {
+      @include fontsize(14);
+      line-height: 2em;
+      text-align: justify;
+    }
+  }
+}
+
+.modal-close {
+  display: block;
+  font-size: 24px;
+  height: 40px;
+  line-height: 40px;
+  margin-top: -20px;
+  position: fixed;
+  right: 30px;
+  text-align: center;
+  text-decoration: none;
+  top: 50%;
+  width: 40px;
+  z-index: $z-modal__close;
+
+  &.white {
+    color: #fff;
+  }
+
+  @include responsive(sp) {
+    display: inline-block;
+    height: auto;
+    left: 0;
+    line-height: 1em;
+    margin-left: 14px;
+    margin-top: 20px;
+    position: absolute;
+    right: auto;
+    text-align: center;
+    top: 0;
+    width: auto;
+    @include fontsize(20);
+  }
+
+  .ua-mobile & {
+    display: inline-block;
+    height: auto;
+    left: 0;
+    line-height: 1em;
+    margin-left: 14px;
+    margin-top: 20px;
+    position: absolute;
+    right: auto;
+    text-align: center;
+    top: 0;
+    width: auto;
+    @include fontsize(20);
+  }
+
+}
+
+.product-key {
+  @include fontsize(24);
+  letter-spacing: 0.01em;
+  line-height: 2.2em;
+
+  &__title {
+    letter-spacing: 0.09em;
+    line-height: 1.4em;
+    margin-bottom: 0;
+  }
+
+  &__number {
+    font-size: 70%;
+    line-height: 2em;
+    margin-top: 0;
+  }
+}
+
+.hgw-carousel .flex-center {
+  @include display-flex;
+}
+
+.flex-center {
+  @include display-flex;
+  @include align-items(center);
+  @include justify-content(center);
+  @include fontsize(24);
+  height: 100%;
+  text-align: center;
+  width: 100%;
+}
+
+.hgw-cover {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: none;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 101;
+}
+
+.hgw-carousel {
+  height: 100%;
+  position: relative;
+  width: 100%;
+  > * {
+    display: none;
+    left: 0;
+    position: absolute;
+    top: 0;
+    z-index: 100;
+  }
+  img {
+    height: auto;
+    width: 100%;
+  }
+}
+
+.fix-ratio {
+  position: relative;
+  width: 100%;
+
+  &:before {
+    content: "";
+    display: block;
+    padding-top: 70.703125%;
+  }
+
+  &__inner {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+  }
+
+  &__floating-quote {
+    bottom: 20px;
+    color: #dadae2;
+    line-height: 1.8em;
+    position: absolute;
+    right: 30px;
+    text-align: right;
+    z-index: 11;
+
+    @include responsive(sp) {
+      line-height: 1.6em;
+      padding: 0 15px;
+      right: 0;
+      text-align: left;
+    }
+
+    .ja {
+      @include fontsize(12);
+      &:before {
+        content: "“";
+        @include fontsize(14);
+      }
+
+      &:after {
+        content: "”";
+        @include fontsize(14);
+      }
+    }
+    .en {
+      @include fontsize(13);
+      font-style: italic;
+    }
+    p {
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+  }
+}
+
+.fix-ratio--256-181 {
+  &:before {
+    padding-top: 70.703125%;
+  }
+}
+
+.fix-ratio--4-3 {
+  &:before {
+    padding-top: 75%; /* 高さを幅の75%に固定 */
+  }
+}
+
+.project-team {
+  @include fontsize(16);
+  line-height: 2em;
+  margin-bottom: 6em;
+  text-align: center;
+
+  @include responsive(sp) {
+    @include fontsize(14);
+  }
+
+  dt {
+    font-family: $font-sans-serif;
+    @include fontsize(14);
+    @include responsive(sp) {
+      @include fontsize(12);
+    }
+  }
+
+  dd {
+    font-family: $font-serif;
+    margin: 0;
+    margin-bottom: 2em;
+  }
+}
+
+.long-dash {
+  margin: 0 0.5em;
+}
+
+.version {
+  @include fontsize(11);
+  bottom: 0;
+  color: #dadae2;
+  display: inline-block;
+  font-family: $font-sans-serif-en;
+  left: 15px;
+  line-height: 1;
+  position: absolute;
+}
+
+.entrance {
+  background: $hi-light;
+  display: table;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: $z-modal;
+
+  @include responsive('sp') {
+    @include fontsize(12);
+  }
+
+  &__box {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  &__box-inside {
+    margin: auto;
+    max-width: 880px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+
+    @include responsive('sp') {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+  }
+
+  &__box-image {
+    line-height: 0;
+    img {
+      height: auto;
+      max-width: 430px;
+      width: 100%;
+
+      @include responsive('sp') {
+        max-width: 320px;
+      }
+
+    }
+  }
+
+  &__title, &__sub-title {
+    font-weight: normal;
+    line-height: 2.2em;
+    margin: 0;
+    @include fontsize(18);
+
+    @include responsive('sp') {
+      line-height: 2em;
+      @include fontsize(16);
+    }
+
+    a {
+      border-bottom: 1px solid #000;
+      text-decoration: none;
+
+      @include transition(border-color 100ms $easeOutQuart);
+
+      &:hover {
+        border-color: rgba(0, 0, 0, 0.25);
+      }
+    }
+  }
+}

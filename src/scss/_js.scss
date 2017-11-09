@@ -1,0 +1,249 @@
+body.js-modal-active {
+  height: 100vh;
+  overflow: hidden;
+  position: fixed;
+
+  .js-container{
+    opacity: 0;
+  }
+
+}
+
+// container
+// =========
+.js-container {
+  opacity: 0;
+  @include transition(all 0.5s $easeOutQuart);
+  &--start {
+    opacity: 1;
+  }
+}
+
+// modal
+// =====
+// link
+.js-modal-slide,
+.js-modal-slide--push {
+  border: 1px solid #111;
+  padding: 5px 4px 2px 4px;
+
+  @include transition(color 1500ms $easeOutQuart, background-color 1500ms $easeOutQuart, border-color 100ms $easeOutQuart);
+
+  &.active {
+    background: #000;
+    border: 1px solid #fff;
+    color: #fff;
+
+    &:hover {
+      background: #000;
+      border-color: #fff;
+      border-style: solid;
+    }
+  }
+
+  &:hover {
+    border-color: #dadae2;
+    //background: #dadae2;
+  }
+}
+
+.js-empty-dot {
+  display: inline-block;
+  *display: inline;
+  @include transform(translateY(-0.25em));
+}
+
+.js-empty-dot span {
+  @include fontsize(14);
+  margin: 0 7px;
+  transform: translateY(-0.25em);
+
+  &::before {
+    color: #d6d6d6;
+    content: '?';
+    font-style: $font-sans-serif-en;
+  }
+
+}
+
+.owl-dots, .js-owl-empty-dots {
+  display: inline-block;
+  @include responsive(sp) {
+    display: none;
+  }
+}
+
+.js-owl-item-box {
+  display: table;
+  position: relative;
+  width: 100%;
+
+  &:before {
+    content: "";
+    display: block;
+    padding-top: $onsight-image-ratio * 1%; /* 高さを幅の75%に固定 */
+  }
+
+  &__fitbox {
+    bottom: 0;
+    display: block;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  &__table {
+    background: #fff;
+    display: table;
+    height: 100%;
+    width: 100%;
+    &-cell {
+      display: table-cell;
+      vertical-align: middle;
+    }
+  }
+
+}
+
+.js-owl-empty-dots.disabled {
+  @include opacity(0);
+}
+
+// .js-modal-docs
+// ==============
+.js-modal-docs {
+  display: none;
+  &.active {
+  }
+}
+
+#js-countdown {
+  &.disabled {
+    cursor: default;
+  }
+
+  &.underline {
+    @extend .tpl-link;
+    line-height: 2.0em;
+    &:before {
+      border-bottom-color: #000;
+    }
+
+
+    @include responsive(sp) {
+      line-height: normal;
+      &:before {
+        border: none;
+      }
+    }
+  }
+
+}
+
+#js-btn-home {
+  &.disabled {
+    display: none;
+  }
+}
+
+.js-slide-box {
+  left: -9999px;
+  &.active {
+    left: 0;
+  }
+}
+
+.js-slide {
+  background: $hi-light;
+}
+
+.js-bg-contain {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 100%;
+  width: 100%;
+}
+
+// js-slide-nav__icon
+// ==================
+.js-slide-nav {
+  background: #fff;
+  display: none;
+  margin: 0;
+  padding: 1em 0;
+  @include responsive(sp) {
+    padding: 0;
+  }
+  &.active {
+    display: block;
+    @include responsive(sp) {
+      display: none;
+    }
+  }
+
+  li {
+    display: inline-block;
+    list-style: none;
+    padding: 0 7px;
+    @include responsive(sp) {
+      padding: 0 0.25em;
+    }
+  }
+
+  &__icon {
+    @include border-radius(2px);
+
+    background-color: $hi-light;
+    display: inline-block;
+    height: 4px;
+    width: 4px;
+
+    &.show {
+      background-color: #000;
+    }
+
+    &.active {
+      @include customAnimation(blink-active, 1s, ease-in-out, infinite) {
+        0% {
+          background-color: #000;
+        }
+        50% {
+          background-color: $hi-light;
+        }
+      }
+    }
+  }
+
+  &__link {
+    padding: 0 7px;
+  }
+
+}
+
+.js-sp-menu-button,
+.js-sp-menu-button--close {
+  text-decoration: none;
+  @include fontsize(24);
+}
+
+.js-sp-menu-button--close {
+  @include fontsize(20);
+  display: inline-block;
+  line-height: 1em;
+  margin-left: 14px;
+  margin-top: 20px;
+  text-decoration: none;
+
+  .menu-list & {
+    border-bottom: none;
+    &:hover {
+      border-bottom: none;
+    }
+    &:active {
+      border-bottom: none;
+    }
+  }
+
+}

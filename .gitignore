@@ -64,3 +64,4 @@ typings/
 src/data/*
 .idea
 .cache
+dist/**/*
