@@ -14,8 +14,8 @@ export default class Tlp {
   constructor(opt) {
     this.el = opt.el;
     this.$el = $(this.el);
-    this.effect = opt.effect;
     this.cbChange = opt.change;
+
 
     this._addEvents();
   }
@@ -43,9 +43,9 @@ export default class Tlp {
       let isDeadLink = $currentTarget.hasClass('ani-button--dead');
 
       if (isDeadLink) {
-        this.cbChange($currentTarget, false);
+        this._close($currentTarget);
       } else {
-        this.cbChange($currentTarget, true);
+        this._open($currentTarget);
       }
 
       e.preventDefault();

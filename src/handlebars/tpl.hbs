@@ -10,80 +10,81 @@
 </head>
 <body>
 
-
-{{! 呼び出し }}
-{{#*inline "echo"}}
-  {{#if notes}}
-  {{! ノート用のテキスト }}
-    <div id="tlp-{{id}}" class="notes inline">{{{text}}}</div>
-  {{else}}
-    {{#if modal}}
-      <a id="tlp-{{id}}" href="{{modal.href}}" class="js-modal-docs-trigger tpl-link--special">{{{text}}}</a>
-
-    {{else if slide}}
-    {{! スライドショーにプッシュする }}
-      <a id="tlp-{{id}}" href="#slide-{{id}}" class="js-modal-slide--push">{{{text}}}</a>
-      <div id="slide-{{id}}" class="modal-slide inline">
-        <ul>
-          {{#each slide}}
-            <li><img src="{{@root.config.fqdn}}/assets/img/no-image.jpg" class="js-preload-img"
-                     data-src="{{@root.config.fqdn}}{{img}}" alt=""></li>
-          {{/each}}
-        </ul>
-      </div>
+<div id="tpl-view">
+  {{! 呼び出し }}
+  {{#*inline "echo"}}
+    {{#if notes}}
+    {{! ノート用のテキスト }}
+      <div id="tlp-{{id}}" class="notes inline">{{{text}}}</div>
     {{else}}
-    {{! 通常のテキスト }}
-      <div id="tlp-{{id}}" class="inline {{class}}">{{{text}}}</div>
-    {{/if}}
-  {{/if}}
+      {{#if modal}}
+        <a id="tlp-{{id}}" href="{{modal.href}}" class="js-modal-docs-trigger tpl-link--special">{{{text}}}</a>
 
-  {{#if tag}}
-  {{! HTML タグの出力 }}
-    {{{tag}}}
-  {{/if}}
-
-  {{#if img}}
-    {{#if block}}
-    {{! BLOCK 画像 }}
-      <div id="tlp-{{id}}" class="block-photo {{class}}"><img src="{{@root.config.fqdn}}{{img}}" alt="{{alt}}">
-      </div>
-    {{else}}
-    {{! inline 画像 }}
-      <div id="tlp-{{id}}" class="{{class}} inline"><img id="tlp-{{id}}" src="{{@root.config.fqdn}}{{img}}"></div>
-    {{/if}}
-  {{/if}}
-{{/inline}}
-
-
-{{! ループテンプレート }}
-{{#*inline "textLoop"}}
-  {{#each array}}
-
-  {{! コンテンツより before で再帰呼び出し }}
-    {{#if before}}
-      <div id="child-tlp-{{id}}--before" class="child inline">
-        {{> textLoop array=before }}
-      </div>
+      {{else if slide}}
+      {{! スライドショーにプッシュする }}
+        <a id="tlp-{{id}}" href="#slide-{{id}}" class="js-modal-slide--push">{{{text}}}</a>
+        <div id="slide-{{id}}" class="modal-slide inline">
+          <ul>
+            {{#each slide}}
+              <li><img src="{{@root.config.fqdn}}/assets/img/no-image.jpg" class="js-preload-img"
+                       data-src="{{@root.config.fqdn}}{{img}}" alt=""></li>
+            {{/each}}
+          </ul>
+        </div>
+      {{else}}
+      {{! 通常のテキスト }}
+        <div id="tlp-{{id}}" class="inline {{class}}">{{{text}}}</div>
+      {{/if}}
     {{/if}}
 
-    {{#isExistBothValues before children}}
-      <a href="#child-tlp-{{id}}" class="tpl-link">{{> echo that=this}}</a>
-    {{else}}
-      {{> echo that=this}}
-    {{/isExistBothValues}}
-
-    {{! コンテンツより after で再帰呼び出し }}
-    {{#if children}}
-      <div id="child-tlp-{{id}}" class="child inline">
-        {{> textLoop array=children }}
-      </div>
+    {{#if tag}}
+    {{! HTML タグの出力 }}
+      {{{tag}}}
     {{/if}}
 
-  {{/each}}
-{{/inline}}
+    {{#if img}}
+      {{#if block}}
+      {{! BLOCK 画像 }}
+        <div id="tlp-{{id}}" class="block-photo {{class}}"><img src="{{@root.config.fqdn}}{{img}}" alt="{{alt}}">
+        </div>
+      {{else}}
+      {{! inline 画像 }}
+        <div id="tlp-{{id}}" class="{{class}} inline"><img id="tlp-{{id}}" src="{{@root.config.fqdn}}{{img}}"></div>
+      {{/if}}
+    {{/if}}
+  {{/inline}}
 
-{{! 実行開始 }}
-{{> textLoop array=this.body }}
+
+  {{! ループテンプレート }}
+  {{#*inline "textLoop"}}
+    {{#each array}}
+
+    {{! コンテンツより before で再帰呼び出し }}
+      {{#if before}}
+        <div id="child-tlp-{{id}}--before" class="child inline">
+          {{> textLoop array=before }}
+        </div>
+      {{/if}}
+
+      {{#isExistBothValues before children}}
+        <a href="#child-tlp-{{id}}" class="tpl-link">{{> echo that=this}}</a>
+      {{else}}
+        {{> echo that=this}}
+      {{/isExistBothValues}}
+
+      {{! コンテンツより after で再帰呼び出し }}
+      {{#if children}}
+        <div id="child-tlp-{{id}}" class="child inline">
+          {{> textLoop array=children }}
+        </div>
+      {{/if}}
+
+    {{/each}}
+  {{/inline}}
+
+  {{! 実行開始 }}
+  {{> textLoop array=this.body }}
+</div>
 
 <script src="/js/app.js"></script>
 </body>
