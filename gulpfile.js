@@ -1,6 +1,9 @@
 'use strict';
 
 
+/** =======================================================
+ * Define
+ ======================================================= */
 const pkg = require('./package.json');
 const gulp = require('gulp');
 const runSequence = require('run-sequence');
@@ -8,7 +11,6 @@ const del = require('del');
 const stripDebug = require('gulp-strip-debug');
 const uglify = require('gulp-uglify');
 const notifier = require('node-notifier');
-// const gutil = require('gulp-util');
 const browserify = require('browserify');
 const babelify = require('babelify');
 const source = require('vinyl-source-stream');
@@ -17,11 +19,14 @@ const yaml = require('gulp-yaml');
 const handlebars = require('gulp-compile-handlebars');
 const rename = require('gulp-rename');
 const htmlmin = require('gulp-htmlmin');
-const wait = require('gulp-wait');
-
 const compass = require('gulp-compass');
 const plumber = require('gulp-plumber');
+const connect = require('gulp-connect');
 
+
+/** =======================================================
+ * Path
+ ======================================================= */
 
 const path = {
   root: './',
@@ -200,6 +205,17 @@ gulp.task('minify-html', function () {
 
 
 /** =======================================================
+ * Serever
+ ======================================================= */
+
+gulp.task('connect', function() {
+  connect.server({
+    root: 'dist',
+  });
+});
+
+
+/** =======================================================
  * Notify
  ======================================================= */
 
@@ -237,6 +253,11 @@ gulp.task('nf-complete-yaml', function () {
     message: 'Complete: Handlebars!'
   });
 });
+
+
+/** =======================================================
+ * Custom Tasks
+ ======================================================= */
 
 /**
  * Watch
@@ -283,6 +304,7 @@ gulp.task('watch', function (callback) {
  */
 gulp.task('default', function () {
   return runSequence(
+    ['connect'],
     'clean',
     'yaml-to-json',
     'deploy-css',

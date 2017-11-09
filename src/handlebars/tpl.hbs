@@ -5,10 +5,10 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, minimal-ui">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title></title>
+  <title>Exported Files</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-
 
 
 {{! 呼び出し }}
@@ -49,8 +49,7 @@
       </div>
     {{else}}
     {{! inline 画像 }}
-      <div id="tlp-{{id}}" class="{{class}} inline"><img id="tlp-{{id}}" src="{{@root.config.fqdn}}{{img}}"
-                                                         alt="{{alt}}"></div>
+      <div id="tlp-{{id}}" class="{{class}} inline"><img id="tlp-{{id}}" src="{{@root.config.fqdn}}{{img}}"></div>
     {{/if}}
   {{/if}}
 {{/inline}}
@@ -86,6 +85,6 @@
 {{! 実行開始 }}
 {{> textLoop array=this.body }}
 
-<script src="./js/app.js"></script>
+<script src="/js/app.js"></script>
 </body>
 </html>
