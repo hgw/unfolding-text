@@ -1,86 +1,32 @@
-// colors
-// ======
-$black: #000;
-$gray: #666;
-$light-gray: #f6f6f6;
-$hi-light: #dadae2;
-$white: #fff;
-
-$font-serif: 'SabonLTPro-Roman', 'Source serif Pro', "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif;
-$font-sans-serif: 'HelveticaNeueLTStd-Roman', 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, "Helvetica Neue", Helvetica, Arial, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
-$font-sans-serif-en: 'HelveticaNeueLTStd-Roman', "Helvetica Neue", Helvetica, Arial, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
-$font-sans-serif-bold: 'HelveticaNeueLTStd-Roman', 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴ Pro W6", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, "Helvetica Neue", Helvetica, Arial, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
-
-$onsight-image-ratio: (2/3) * 100;
-$typology-image-ratio: (3/4) * 100;
-
-$z-sub: 1;
-$z-main: 10;
-$z-main-sp: 1;
-$z-sub--sp: 20;
-$z-menu: 50;
-$z-modal: 100;
-$z-modal__close: 110;
-
-// mixin
-// =====
 
 @mixin heading {
   display: block;
-  font-family: $font-sans-serif-bold;
   font-weight: bold;
   padding-top: 2em;
-  //-webkit-font-smoothing: antialiased;
 }
 
 @mixin heading-2 {
   display: block;
-  font-family: $font-sans-serif-bold;
   font-weight: bold;
   padding-top: 2em;
   color: #666;
-  //-webkit-font-smoothing: antialiased;
 }
 
 // basic
 // =====
 
 html, body {
-  color: $black;
-  font-family: $font-serif;
 }
 
 * {
   box-sizing: border-box;
 }
 
-a {
-  color: $black;
-}
 
 // init
 // ====
 .inline {
   display: inline;
-}
-
-.pc-hide {
-  display: none;
-  @include responsive(sp) {
-    display: block;
-  }
-  &.but-touch {
-    .ua-mobile & {
-      display: block;
-    }
-  }
-}
-
-.sp-hide {
-  display: inherit;
-  @include responsive(sp) {
-    display: none;
-  }
 }
 
 .ani-button--dead {
@@ -94,12 +40,7 @@ a {
   }
 }
 
-.small {
-  font-size: 70%;
-}
-
 .tpl-link.ani-button--dead {
-  //display: inline;
 }
 
 .tpl-link.ani-button--heading {
@@ -120,59 +61,4 @@ a {
 
 .none {
   display: none;
-}
-
-// layout
-// ======
-.wrap {
-}
-
-.main {
-  letter-spacing: 0.01em; // for Android 4.4
-  line-height: 2.2em;
-
-  //-webkit-font-feature-settings: 'palt' 1;
-  //font-feature-settings: 'palt' 1;
-  //-webkit-font-smoothing: antialiased;
-
-  @include fontsize(21);
-
-  a {
-    text-decoration: none;
-  }
-
-  @include responsive('tablet') {
-    letter-spacing: 0.01em;
-    -webkit-font-feature-settings: normal;
-    @include fontsize(18);
-    font-feature-settings: normal; // for Android 4.4
-  }
-
-  @include responsive(sp) {
-    letter-spacing: 0.01em;
-    -webkit-font-feature-settings: normal;
-    @include fontsize(18);
-    font-feature-settings: normal; // for Android 4.4
-  }
-  .view {
-    //text-align: justify;
-  }
-  .lang-en & {
-    letter-spacing: 0.025em;
-  }
-}
-
-.sub {
-
-}
-
-// logo
-// ====
-.logo {
-  line-height: 0;
-  padding-left: 1.1em;
-  a {
-    border-bottom: 0;
-    text-decoration: none;
-  }
 }

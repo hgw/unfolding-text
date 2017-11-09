@@ -32,8 +32,7 @@ const path = {
   root: './',
   src: './src',
   cache: './src/.cache',
-  dist: './dist',
-  textSrc: './text-src/index.yaml',
+  dist: './dist'
 };
 
 /** =======================================================
@@ -49,32 +48,6 @@ let setHbsIDs = function (target_, level_) {
       setHbsIDs(current.children, currentLevel + "-");
     }
   }
-};
-
-
-let doCompileHandlebars = function (src, fileName, distPath) {
-  // json のデータを読み込み
-  let fs = require('fs');
-  let hbsModel = JSON.parse(fs.readFileSync(src, 'utf-8'));
-  console.log("handlebars 変換用に json に対して ID を設定します");
-  setHbsIDs(hbsModel.body, "");
-
-  let options = {
-    helpers: {
-      isExistBothValues: function (v1, v2, options) {
-        if (v1 || v2) {
-          return options.fn(this);
-        } else {
-          return options.inverse(this);
-        }
-      }
-    }
-  };
-
-  return gulp.src(path.src + '/handlebars/tpl.hbs')
-    .pipe(handlebars(hbsModel, options))
-    .pipe(rename(fileName))
-    .pipe(gulp.dest(distPath));
 };
 
 
@@ -171,7 +144,7 @@ gulp.task('js-browserify', () => {
  * YAML Document to JSON
  */
 gulp.task('yaml-to-json', function () {
-  gulp.src(path.textSrc)
+  return gulp.src(path.src + '/text-src/index.yml')
     .pipe(yaml({
       schema: 'DEFAULT_SAFE_SCHEMA'
     }))
@@ -182,8 +155,36 @@ gulp.task('yaml-to-json', function () {
  * Handlebars
  */
 gulp.task('compile-handlebars', () => {
-  return doCompileHandlebars(path.src + '/data/index.json', 'index.html', path.cache + '/html');
+
+  let src = path.src + '/data/index.json';
+  let fileName = 'index.html';
+  let distPath = path.cache + '/html';
+
+  // json のデータを読み込み
+  let fs = require('fs');
+  let hbsModel = JSON.parse(fs.readFileSync(src, 'utf-8'));
+  console.log("handlebars 変換用に json に対して ID を設定します");
+  setHbsIDs(hbsModel.body, "");
+
+  let options = {
+    helpers: {
+      isExistBothValues: function (v1, v2, options) {
+        if (v1 || v2) {
+          return options.fn(this);
+        } else {
+          return options.inverse(this);
+        }
+      }
+    }
+  };
+
+  return gulp.src(path.src + '/handlebars/tpl.hbs')
+    .pipe(handlebars(hbsModel, options))
+    .pipe(rename(fileName))
+    .pipe(gulp.dest(distPath));
 });
+
+
 
 
 /** =======================================================
@@ -208,7 +209,7 @@ gulp.task('minify-html', function () {
  * Serever
  ======================================================= */
 
-gulp.task('connect', function() {
+gulp.task('connect', function () {
   connect.server({
     root: 'dist',
   });
@@ -269,7 +270,7 @@ gulp.task('watch', function (callback) {
     ],
     function (e) {
       return runSequence(
-        'compass-dev',
+        'deploy-css',
         "nf-complete-css"
       );
     });
@@ -277,22 +278,21 @@ gulp.task('watch', function (callback) {
     [
       `${path.src}/js/**/*.js`
     ], [
-      'js',
+      'js-browserify',
       "nf-complete-js"
     ]);
   gulp.watch(
     [
       `${path.src}/hbs/**/*.hbs`,
-      `${path.src}/yaml/**/*.yml`
+      `${path.src}/text-src/**/*.yml`,
+      `${path.src}/text-src/**/*.yaml`,
     ],
     function () {
       return runSequence(
-        'clean',
-        'yaml-to-json',
-        'compile-handlebars',
-        'minify-html',
-        'js-browserify',
-        "nf-complete-yaml"
+        ['yaml-to-json'],
+        ['compile-handlebars'],
+        ['minify-html'],
+        ["nf-complete-yaml"]
       );
     }
   );
@@ -306,8 +306,8 @@ gulp.task('default', function () {
   return runSequence(
     ['connect'],
     'clean',
-    'yaml-to-json',
     'deploy-css',
+    'yaml-to-json',
     'compile-handlebars',
     'minify-html',
     'js-browserify',
